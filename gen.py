@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
+import os
 import pyAgrum as gum
 from pyAgrum.lib.pretty_print import pretty_cpt
-import numpy as np
 from numpy.random import choice
-import random
-import os
-from operator import itemgetter
 
 class Gen:
 
