@@ -10,11 +10,11 @@ class Gen:
 		pass
 
 	# Generation du fichier CSV
-	def genere(self,nomBif,nomCSV,N):
+	def genere(self,nomBIF,nomCSV,N):
 
 		# Lecture du Reseau Bayesien
 		bn = gum.BayesNet()
-		bn.loadBIF(nomBif)
+		bn.loadBIF(os.path.join("BIF",nomBIF))
 
 		seq = ''
 		# On genere N cas
@@ -29,7 +29,7 @@ class Gen:
 			seq += '\n'
 
 		# Ecriture du résultat dans le fichier contenu dans un dossier csvDir
-		csvFile = open(os.path.join("csvDir",nomCSV), 'w')
+		csvFile = open(os.path.join("CSV",nomCSV), 'w')
 		csvFile.write(seq)
 		csvFile.close()
 
@@ -72,7 +72,7 @@ class Gen:
 
 
 	def run(self):
-		self.genere('bn.bif','csvFile.csv',5)
+		self.genere('bn.bif','csvFile.csv',10)
 
 
 if __name__ == "__main__":
