@@ -72,12 +72,12 @@ class Learning1:
 			# Affichage de l'état de l'avancement
 			print i
 			# Generation de valeurs et apprentissage du réseau bayesien
-			generator.genere(nomBIF,nomCSV,i)
-			bn1 = self.plearn(nomBIF,nomCSV)
-			# Deuxieme generation de valeurs et apprentissage du réseau bayesien
-			generator.genere(nomBIF,nomCSV,i)
-			bn2 = self.plearn(nomBIF,nomCSV)
+			generator.genere('bn.bif',nomCSV,i)
+			bn1 = self.plearn('empty_bn.bif',nomCSV)
 			# Ajout dans le tableau de la valeur de epsilon
+			bn2 = gum.BayesNet()
+			bn2.loadBIF(os.path.join("BIF",'bn.bif'))
+
 			tab.insert(i,self.compareParams(bn1,bn2))
 
 		# Creation et affichage de la courbe représentant l'évolution de epsilon selon N
