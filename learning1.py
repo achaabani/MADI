@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 import csv
-import copy
 import pyAgrum as gum
 from pyAgrum.lib.pretty_print import pretty_cpt
 import matplotlib.pyplot as plt
@@ -62,19 +61,26 @@ class Learning1:
 
 
 	def evalLearningP(self,nomBIF,nomCSV, N):
+		# Genere les fichiers CSV selon le réseau bayesien en parametre
 		generator = Gen()
 
+		# Tableau où les valeurs de epsilon seront stockées
 		tab = []
 
+		# Compare les reseaux bayesiens selon les parametres appris
 		for i in range(1,N):
+			# Affichage de l'état de l'avancement
 			print i
-
+			# Generation de valeurs et apprentissage du réseau bayesien
 			generator.genere(nomBIF,nomCSV,i)
 			bn1 = self.plearn(nomBIF,nomCSV)
+			# Deuxieme generation de valeurs et apprentissage du réseau bayesien
 			generator.genere(nomBIF,nomCSV,i)
 			bn2 = self.plearn(nomBIF,nomCSV)
+			# Ajout dans le tableau de la valeur de epsilon
 			tab.insert(i,self.compareParams(bn1,bn2))
 
+		# Creation et affichage de la courbe représentant l'évolution de epsilon selon N
 		plt.plot(tab)
 		plt.show()
 
