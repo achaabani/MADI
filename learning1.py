@@ -4,6 +4,9 @@ import csv
 import copy
 import pyAgrum as gum
 from pyAgrum.lib.pretty_print import pretty_cpt
+import matplotlib.pyplot as plt
+
+from gen import *
 
 class Learning1:
 
@@ -37,18 +40,47 @@ class Learning1:
 		# Normalisation du BN pour obtenir des probas
 		for i in range(len(bn.names())):
 			bn.cpt(i).normalize()
-			
+
 		return bn
 
-	def compareParams(bn1,bn2):
+	def compareParams(self,bn1,bn2):
+
+		# Valeur d'epsilon
 		epsilon = 0
 
+		# On calcule la somme des carrés de la difference de toutes les valeurs des BN deux à deux
+		for i in range(len(bn1.names())):
+			inst = gum.Instantiation(bn1.cpt(i))
+			inst.setFirst()
+			epsilon += pow(bn1.cpt(i).get(inst) - bn2.cpt(i).get(inst), 2)
+			inst.inc()
 
-	def evalLearningP(nomBN):
-		pass
+		# On divise la somme par le nombre de paramètres
+		epsilon /= len(bn1.names())
+
+		return epsilon
+
+
+	def evalLearningP(self,nomBIF,nomCSV, N):
+		generator = Gen()
+
+		tab = []
+
+		for i in range(1,N):
+			print i
+
+			generator.genere(nomBIF,nomCSV,i)
+			bn1 = self.plearn(nomBIF,nomCSV)
+			generator.genere(nomBIF,nomCSV,i)
+			bn2 = self.plearn(nomBIF,nomCSV)
+			tab.insert(i,self.compareParams(bn1,bn2))
+
+		plt.plot(tab)
+		plt.show()
 
 	def run(self):
-		self.plearn('empty_bn.bif','csvFile.csv')
+		self.evalLearningP('empty_bn.bif','csvFile.csv',200)
+
 
 if __name__ == "__main__":
 	learning1 = Learning1()
