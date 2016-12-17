@@ -34,8 +34,15 @@ class Learning1:
 					# On incrémente la valeur filtree
 					bn.cpt(var)[parents] += 1
 
+		# Normalisation du BN pour obtenir des probas
+		for i in range(len(bn.names())):
+			bn.cpt(i).normalize()
+			
+		return bn
+
 	def compareParams(bn1,bn2):
-		pass
+		epsilon = 0
+
 
 	def evalLearningP(nomBN):
 		pass
